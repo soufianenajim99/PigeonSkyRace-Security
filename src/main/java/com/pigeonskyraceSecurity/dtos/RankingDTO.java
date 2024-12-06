@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Builder
 public record RankingDTO(
@@ -17,7 +18,7 @@ public record RankingDTO(
         @NotNull RaceDTO race) {
 
 
-    public RankingDTO withPigeonAndRaceIds(String pigeonId, String raceId) {
+    public RankingDTO withPigeonAndRaceIds(UUID pigeonId, UUID raceId) {
         return new RankingDTO(id, startTime, distance, adjustedSpeed, score,
                 PigeonDTO.builder().id(pigeonId).build(),
                 RaceDTO.builder().id(raceId).build());

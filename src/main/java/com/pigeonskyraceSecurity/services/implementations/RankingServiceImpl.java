@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RankingServiceImpl implements RankingService {
@@ -60,10 +61,10 @@ public class RankingServiceImpl implements RankingService {
         int[] breederIndex = {0};
         rankings.forEach(ranking -> {
             if (ranking.getPigeon() != null) {
-                String breederId = breeders.get(breederIndex[0] % breederCount).id();
+                String breederId = String.valueOf(breeders.get(breederIndex[0] % breederCount).id());
                 breederIndex[0]++;
                 pigeonService.save(
-                        pigeonMapper.toDTO(ranking.getPigeon()).withBreederId(breederId)
+                        pigeonMapper.toDTO(ranking.getPigeon()).withBreederId(UUID.fromString(breederId))
                 );
             }
         });
@@ -81,12 +82,12 @@ public class RankingServiceImpl implements RankingService {
                 .map(ranking -> {
                     // Determine the current pigeon and race in a round-robin manner
                     int index = rankings.indexOf(ranking);
-                    String pigeonId = pigeons.get(index % pigeonCount).id();
-                    String raceId = races.get(index % raceCount).id();
+                    UUID pigeonId = UUID.fromString(String.valueOf(pigeons.get(index % pigeonCount).id()));
+                    String raceId = String.valueOf(races.get(index % raceCount).id());
 
                     // Map ranking and assign pigeon and race IDs
                     return rankingMapper.toDTO(ranking)
-                            .withPigeonAndRaceIds(pigeonId, raceId);
+                            .withPigeonAndRaceIds(pigeonId, UUID.fromString(raceId));
                 })
                 .map(this::addPigeonToRace)
                 .toList();
@@ -102,15 +103,6 @@ public class RankingServiceImpl implements RankingService {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 

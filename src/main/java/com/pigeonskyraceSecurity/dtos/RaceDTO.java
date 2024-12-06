@@ -8,10 +8,11 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 public record RaceDTO(
-        String id,
+        UUID id,
         @NotBlank String name,
         @NotNull double longitude,
         @NotNull double latitude,
@@ -25,7 +26,7 @@ public record RaceDTO(
         List<RankingDTO> rankings ,
         CompetitionDTO competition){
 
-    public RaceDTO withCompetitionId(String competitionId) {
+    public RaceDTO withCompetitionId(UUID competitionId) {
         return new RaceDTO(id, name, longitude,latitude, startDate, targetDistance,tolerance,avgDistance,autoAdj, closedAt,rankings,
                 CompetitionDTO.builder().id(competitionId).build());
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -41,7 +42,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     public Competition findEntityById(String id) {
-        Optional<Competition> competition = competitionRepository.findById(id);
+        Optional<Competition> competition = competitionRepository.findById(UUID.fromString(id));
         if(competition.isPresent()){
             return competition.get();
         } else {
@@ -51,7 +52,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public CompetitionDTO findById(String id) {
-        Optional<Competition> competition = competitionRepository.findById(id);
+        Optional<Competition> competition = competitionRepository.findById(UUID.fromString(id));
         if(competition.isPresent()){
             return competition.map(competitionMapper::toDTO).orElse(null);
         } else {

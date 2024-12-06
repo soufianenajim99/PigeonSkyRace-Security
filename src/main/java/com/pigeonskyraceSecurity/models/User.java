@@ -1,12 +1,12 @@
 package com.pigeonskyraceSecurity.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String username;
     private String email;
     private String password;

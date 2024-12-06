@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/pigeons")
@@ -25,7 +26,7 @@ public class PigeonController {
     @PostMapping("save")
     public ResponseEntity<ApiResponse<PigeonDTO>> save(@RequestBody @Valid PigeonDTO pigeonDTO, HttpServletRequest request) {
         String breederId = (String) request.getSession().getAttribute("breederId");
-        PigeonDTO createdPigeon = pigeonService.save(pigeonDTO.withBreederId(breederId));
+        PigeonDTO createdPigeon = pigeonService.save(pigeonDTO.withBreederId(UUID.fromString(breederId)));
         return ResponseEntity.ok(ResponseUtil.success(createdPigeon, "Pigeon saved successfully", request.getRequestURI()));
     }
 
@@ -37,7 +38,7 @@ public class PigeonController {
     @PostMapping("save-all")
     public ResponseEntity<ApiResponse<List<PigeonDTO>>> saveAll(@RequestBody List<PigeonDTO> pigeonDTOs, HttpServletRequest request) {
         String breederId = (String) request.getSession().getAttribute("breederId");
-        pigeonDTOs = pigeonDTOs.stream().map(pigeonDTO -> pigeonDTO.withBreederId(breederId)).toList();
+        pigeonDTOs = pigeonDTOs.stream().map(pigeonDTO -> pigeonDTO.withBreederId(UUID.fromString(breederId))).toList();
         return ResponseEntity.ok(ResponseUtil.success(pigeonService.saveAll(pigeonDTOs), "Pigeons saved successfully", request.getRequestURI()));
     }
 }

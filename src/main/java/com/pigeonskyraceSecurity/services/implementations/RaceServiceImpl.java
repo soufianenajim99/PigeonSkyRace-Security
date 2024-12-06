@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RaceServiceImpl implements RaceService {
@@ -39,7 +40,7 @@ public class RaceServiceImpl implements RaceService {
     public RaceDTO save(RaceDTO raceDTO) {
         Race race = raceMapper.toRace(raceDTO);
         Race savedRace = raceRepository.save(race);
-        return findById(savedRace.getId());
+        return findById(String.valueOf(savedRace.getId()));
     }
 
     @Override
@@ -65,7 +66,7 @@ public class RaceServiceImpl implements RaceService {
     }
 
     public Race findEntityById(String id) {
-        Optional<Race> race = raceRepository.findById(id);
+        Optional<Race> race = raceRepository.findById(UUID.fromString(id));
         if(race.isPresent()){
             return race.get();
         } else {
@@ -96,7 +97,7 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public List<Breeder> getParticipatingBreeders(String id) {
-        return raceRepository.findDistinctLoftsByRaceId(id);
+        return raceRepository.findDistinctLoftsByRaceId(UUID.fromString(id));
 
     }
 }

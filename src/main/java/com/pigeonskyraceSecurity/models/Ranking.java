@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "rankings")
@@ -23,7 +24,8 @@ import java.time.LocalTime;
 public class Ranking {
     @Id
     @CsvBindByName
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @CsvCustomBindByName(converter = LocalTimeConverter.class)
     private LocalTime startTime;

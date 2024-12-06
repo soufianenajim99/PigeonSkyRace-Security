@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "pigeons")
@@ -18,7 +19,8 @@ import java.util.List;
 @Data
 public class Pigeon {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String bandNumber;
 

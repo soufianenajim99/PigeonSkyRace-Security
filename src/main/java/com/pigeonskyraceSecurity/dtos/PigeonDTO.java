@@ -6,8 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
-public record PigeonDTO(String id,
+public record PigeonDTO(UUID id,
                         String bandNumber,
                         Gender gender,
                         @NotBlank String birthYear,
@@ -15,7 +17,7 @@ public record PigeonDTO(String id,
                         String image,
                         BreederDTO breeder) {
 
-    public PigeonDTO withBreederId(String breederId) {
+    public PigeonDTO withBreederId(UUID breederId) {
         return new PigeonDTO(id, bandNumber, gender, birthYear, color, image, BreederDTO.builder().id(breederId).build());
     }
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -32,7 +33,7 @@ public class PigeonServiceImpl implements PigeonService {
         Pigeon pigeon = pigeonMapper.toPigeon(pigeonDTO);
         pigeon.setBandNumber(bandNumberGenerator.generate(pigeon.getGender(), pigeon.getBirthYear()));
         Pigeon savedPigeon = pigeonRepository.save(pigeon);
-        return findById(savedPigeon.getId());
+        return findById(String.valueOf(savedPigeon.getId()));
     }
 
     @Override
@@ -51,7 +52,7 @@ public class PigeonServiceImpl implements PigeonService {
 
     @Override
     public PigeonDTO findById(String id) {
-        Optional<Pigeon> foundPigeon = pigeonRepository.findById(id);
+        Optional<Pigeon> foundPigeon = pigeonRepository.findById(UUID.fromString(id));
         return foundPigeon.map(pigeonMapper::toDTO).orElse(null);
 
     }

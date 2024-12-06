@@ -8,9 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface RaceRepository extends JpaRepository<Race, String> {
+public interface RaceRepository extends JpaRepository<Race, UUID> {
 
     @Query(value = """
         SELECT DISTINCT b.*
@@ -20,5 +21,5 @@ public interface RaceRepository extends JpaRepository<Race, String> {
         JOIN races race ON race.id = r.race_id
         WHERE race.id = :raceId
     """, nativeQuery = true)
-    List<Breeder> findDistinctLoftsByRaceId(@Param("raceId") String raceId);
+    List<Breeder> findDistinctLoftsByRaceId(@Param("raceId") UUID raceId);
 }
